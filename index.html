@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>MindRelax</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(230, 247, 255); /* Azul bem clarinho */
+            overflow-x: hidden; /* Evita a barra de rolagem horizontal */
+            scroll-behavior: smooth; /* Rolagem suave */
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.5); /* Sobreposição escura */
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2; /* Garante que o cabeçalho esteja acima da imagem de fundo */
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        .instagram {
+            font-size: 14px;
+            font-weight: normal;
+            text-decoration: none;
+            color: white;
+            margin-right: 20px;
+        }
+        .background-image {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            filter: brightness(50%); /* Reduz o brilho da imagem */
+        }
+        .about-section {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        .chatbot-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .chatbot {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+        .user-message {
+            background-color: #daf1ff;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .bot-message {
+            background-color: #e0ffe6;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .chat-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">MindRelax</a>
+        <a href="https://www.instagram.com/mindrelax.ods/" target="_blank" class="instagram">Instagram</a>
+    </header>
+    <img src="UpscaleImage_1_20240606.jpeg" alt="MindRelax" class="background-image">
+    <div class="about-section" id="introText">Bem-vindo ao MindRelax, sua psicóloga virtual</div>
+
+    <div class="chatbot-section" id="chatbotContainer">
+        <div class="chat-container">
+            <div class="chat-box" id="chatBox">
+                <div class="bot-message">Olá! Como posso ajudar você?</div>
+            </div>
+            <input type="text" class="chat-input" id="userInput" placeholder="Digite sua mensagem...">
+        </div>
+    </div>
+
+    <script>
+        function sendUserMessage() {
+            var userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return;
+
+            var chatBox = document.getElementById('chatBox');
+            var userMessageElement = document.createElement('div');
+            userMessageElement.className = 'user-message';
+            userMessageElement.textContent = userInput;
+            chatBox.appendChild(userMessageElement);
+
+            document.getElementById('userInput').value = '';
+
+            // Simulação de resposta do bot após 1 segundo
+            setTimeout(function() {
+                var botMessageElement = document.createElement('div');
+                botMessageElement.className = 'bot-message';
+                botMessageElement.textContent = getBotResponse(userInput);
+                chatBox.appendChild(botMessageElement);
+
+                // Rola para o final do chat
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+        
+
+        function getBotResponse(userInput) {
+            userInput = userInput.toLowerCase().trim();
+
+            var responses = {
+                "olá": "Olá! Como posso ajudar você?",
+                "como você está?": "Estou bem, obrigado por perguntar!",
+                "o que é o mindrelax?": "O MindRelax é uma plataforma dedicada ao bem-estar mental, oferecendo recursos e ferramentas para ajudar você a relaxar e encontrar equilíbrio na vida.",
+                "obrigado": "De nada! Estou aqui para ajudar.",
+                "adeus": "Até mais! Se precisar de mais alguma coisa, estarei por aqui.",
+                "estou com ansiedade": "Sei que enfrentar a ansiedade pode ser desafiador, mas estou aqui para ajudar. Assim como outras pessoas, como Ana e Felipe, que superaram seus problemas de ansiedade, você também pode encontrar maneiras eficazes de lidar com isso. Vamos trabalhar juntos para desenvolver estratégias personalizadas e alcançar seu bem-estar emocional.",
+                "tenho dificuldade para dormir": "A insônia pode ser bastante frustrante. Vamos explorar algumas técnicas de relaxamento, como meditação guiada, respiração profunda e criar uma rotina de sono saudável para ajudar você a ter uma boa noite de sono.",
+                "como posso aliviar o estresse?": "Existem várias maneiras de aliviar o estresse, como praticar exercícios físicos, meditação, hobbies relaxantes, passar tempo com amigos e familiares, e estabelecer limites saudáveis. Vamos encontrar o que funciona melhor para você!",
+                "default": "Desculpe, não entendi. Você pode reformular sua pergunta?"
+            };
+
+            if (responses.hasOwnProperty(userInput)) {
+                return responses[userInput];
+            } else {
+                return responses["default"];
+            }
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+        
+
+        window.onload = function() {
+            var introText = document.getElementById('introText');
+            setTimeout(function() {
+                introText.classList.add('fade-out');
+                
+                // Rola para baixo após a animação de boas-vindas
+                setTimeout(function() {
+                    document.getElementById('chatbotContainer').scrollIntoView({ behavior: 'smooth' });
+                }, 1000); // Rola para baixo após 1 segundo
+            }, 3000); // Desaparece após 3 segundos
+        };
+    </script>
+</body>
+
+</div>
+</html>

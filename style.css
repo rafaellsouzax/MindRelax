@@ -1,0 +1,88 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background-color: rgb(101, 219, 255);
+    }
+    header {
+        background-color: transparent; /* Cor de fundo transparente */
+        color: rgb(176, 241, 255); /* Cor do texto preto */
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .instagram {
+        font-size: 14px;
+        font-weight: normal;
+        text-decoration: none;
+        color: rgb(183, 236, 255); /* Cor do texto preto */
+        margin-right: 20px; /* Adiciona margem à direita para separar do canto */
+    }
+    main {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 50px; /* Adiciona padding para evitar que o conteúdo fique oculto sob o cabeçalho */
+    }
+    .background-image {
+        width: 100%;
+        height: auto;
+    }
+    #quizContainer {
+        display: none;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin: 50px auto; /* Centraliza a seção do quiz */
+        text-align: center;
+    }
+    
+    form#quizForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Espaço entre os grupos de perguntas */
+    }
+    
+    form#quizForm div {
+        text-align: left;
+    }
+    
+    form#quizForm label {
+        font-size: 18px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    
+    form#quizForm input[type="radio"] {
+        margin-right: 10px;
+    }
+    
+    form#quizForm button {
+        background-color: #0099cc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    form#quizForm button:hover {
+        background-color: #0077aa;
+    }
+    
