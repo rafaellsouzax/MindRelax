@@ -1,1 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>MindRelax</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(230, 247, 255);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        .instagram {
+            font-size: 14px;
+            font-weight: normal;
+            text-decoration: none;
+            color: white;
+            margin-right: 20px;
+        }
+        .background-image {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            filter: brightness(50%);
+        }
+        .about-section {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        .chatbot-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .chatbot {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+        .user-message {
+            background-color: #daf1ff;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .bot-message {
+            background-color: #e0ffe6;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .chat-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">MindRelax</a>
+        <a href="https://www.instagram.com/mindrelax.ods/" target="_blank" class="instagram">Instagram</a>
+    </header>
+    <img src="UpscaleImage_1_20240606.jpeg" alt="MindRelax" class="background-image">
+    <div class="about-section" id="introText">Bem-vindo ao MindRelax, sua psicóloga virtual</div>
 
+    <div class="chatbot-section" id="chatbotContainer">
+        <div class="chat-container">
+            <div class="chat-box" id="chatBox">
+                <div class="bot-message">Olá! Como posso ajudar você?</div>
+            </div>
+            <input type="text" class="chat-input" id="userInput" placeholder="Digite sua mensagem...">
+        </div>
+    </div>
+
+    <script>
+        function sendUserMessage() {
+            var userInput = document.getElementById('userInput').value;
+            if (userInput.trim() === '') return;
+
+            var chatBox = document.getElementById('chatBox');
+            var userMessageElement = document.createElement('div');
+            userMessageElement.className = 'user-message';
+            userMessageElement.textContent = userInput;
+            chatBox.appendChild(userMessageElement);
+
+            document.getElementById('userInput').value = '';
+
+            // Simulação de resposta do bot após 1 segundo
+            setTimeout(function() {
+                var botMessageElement = document.createElement('div');
+                botMessageElement.className = 'bot-message';
+                botMessageElement.textContent = getBotResponse(userInput);
+                chatBox.appendChild(botMessageElement);
+
+                // Rola para o final do chat
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function getBotResponse(userInput) {
+            userInput = userInput.toLowerCase().trim();
+
+            var responses = {
+                "olá": "Olá! Como posso ajudar você?",
+                "como você está?": "Estou bem, obrigado por perguntar! E você, como está se sentindo?",
+                "o que é o mindrelax?": "O MindRelax é uma plataforma dedicada ao bem-estar mental, oferecendo recursos e ferramentas para ajudar você a relaxar e encontrar equilíbrio na vida.",
+                "obrigado": "De nada! Estou aqui para ajudar. Se precisar de mais alguma coisa, é só falar.",
+                "adeus": "Até mais! Se precisar de mais alguma coisa, estarei por aqui.",
+                "estou com ansiedade": "Lidar com a ansiedade pode ser muito difícil. Que tal tentarmos algumas técnicas de respiração profunda ou uma breve meditação guiada? Estou aqui para ajudar você a encontrar um pouco de paz.",
+                "tenho dificuldade para dormir": "Entendo como a insônia pode ser frustrante. Podemos tentar algumas técnicas de relaxamento, como ouvir uma meditação guiada ou praticar respiração profunda antes de dormir.",
+                "como posso aliviar o estresse?": "Existem várias maneiras de aliviar o estresse, como praticar exercícios físicos, meditação, hobbies relaxantes, passar tempo com amigos e familiares, e estabelecer limites saudáveis. Vamos encontrar o que funciona melhor para você!",
+"como posso melhorar minha concentração": "Melhorar a concentração pode ser difícil, mas eliminar distrações, estabelecer metas claras e fazer pausas regulares pode ajudar bastante.",
+                "como lidar com a pressão no trabalho": "Lidar com a pressão no trabalho é complicado. Tente se organizar, definir prioridades e não hesite em pedir ajuda quando necessário.",
+                "como posso melhorar minha autoestima": "Melhorar a autoestima envolve práticas de autocuidado, como alimentação saudável, exercícios, e hobbies que você goste. Vamos trabalhar nisso juntos.",
+                "como posso melhorar meu relacionamento interpessoal": "Relacionamentos interpessoais saudáveis são importantes. Pratique a escuta ativa, seja empático e respeitoso. Estou aqui para ajudar você a melhorar isso.",
+                "como posso lidar com o estresse escolar": "O estresse escolar é comum. Tente manter uma rotina equilibrada e estabelecer metas realistas. Não hesite em pedir ajuda quando precisar.",
+                "o que devo fazer se estiver sendo intimidado na escola": "Se você está sendo intimidado, fale com um adulto de confiança. Eles podem ajudar a resolver a situação e garantir um ambiente seguro para você.",
+                "como posso me motivar a estudar mais": "Encontrar motivação para estudar pode ser difícil. Tente estabelecer metas claras, criar um ambiente de estudo positivo e recompensar-se pelo progresso.",
+                "o que devo fazer se estiver me sentindo solitário": "Se você está se sentindo solitário, tente se conectar com outras pessoas e participar de atividades sociais. Conversar com um amigo ou familiar pode ajudar.",
+                "como posso me comunicar melhor com meus pais": "Comunicar-se com os pais pode ser desafiador. Expresse seus sentimentos de forma clara e respeitosa, e busque momentos adequados para conversar.",
+                "o que devo fazer se tiver problemas com meus pais": "Se você está enfrentando problemas com seus pais, busque ajuda e suporte. Conversar com um adulto de confiança pode oferecer orientação e apoio.",
+                "quem é você": "Eu sou o MindRelax, sua psicóloga virtual. Estou aqui para fornecer apoio emocional e responder às suas perguntas.",
+                "o que você faz": "Como psicóloga virtual, estou aqui para ajudar você a lidar com questões emocionais e fornecer estratégias para promover o bem-estar mental.",
+                "como você funciona": "Eu funciono usando algoritmos para entender suas perguntas e fornecer respostas com base em uma base de conhecimento pré-definida.",
+                "você é humano": "Não, eu sou um programa de computador desenvolvido para fornecer suporte psicológico e interações conversacionais.",
+                "default": "Desculpe, não entendi. Você pode reformular sua pergunta?"
+ };
+
+            if (responses.hasOwnProperty(userInput)) {
+                return responses[userInput];
+            } else {
+                return responses["default"];
+            }
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+
+        window.onload = function() {
+            var introText = document.getElementById('introText');
+            setTimeout(function() {
+                introText.classList.add('fade-out');
+                
+                setTimeout(function() {
+                    document.getElementById('chatbotContainer').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
