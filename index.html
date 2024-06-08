@@ -114,6 +114,23 @@
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
             font-size: 16px;
         }
+         <style>
+        /* Estilos CSS existentes */
+
+        /* Estilos adicionais para o botão de envio */
+        .send-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +149,16 @@
             <input type="text" class="chat-input" id="userInput" placeholder="Digite sua mensagem...">
         </div>
     </div>
+      <div class="chatbot-section" id="chatbotContainer">
+        <div class="chat-container">
+            <div class="chat-box" id="chatBox">
+                <div class="bot-message">Olá! Como posso ajudar você?</div>
+            </div>
+            <!-- Formulário para enviar mensagens -->
+            <form onsubmit="sendMessage(event)">
+                <input type="text" class="chat-input" id="userInput" placeholder="Digite sua mensagem...">
+                <!-- Botão de envio -->
+                <button type="submit" class="send-button">Enviar</button>
 
     <script>
         function sendUserMessage() {
